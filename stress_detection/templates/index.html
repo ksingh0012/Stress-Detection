@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stress Detection</title>
+</head>
+<body>
+    <h1>Stress Detection</h1>
+    <form id="sentimentForm">
+        <textarea name="text" rows="4" cols="50" placeholder="Enter text here..."></textarea><br>
+        <button type="submit">Predict</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('sentimentForm').onsubmit = async function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            const formData = new FormData(this);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText = result.prediction || result.error;
+        };
+    </script>
+</body>
+</html>
